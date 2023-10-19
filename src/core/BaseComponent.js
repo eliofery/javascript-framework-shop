@@ -1,5 +1,3 @@
-// Компонент карточка
-
 export default class BaseComponent {
   _component = null
 
@@ -49,8 +47,8 @@ export default class BaseComponent {
   }
 
   // Получение вложенных элементов в компоненте
-  _initElements() {
-    const list = this._component.querySelectorAll('[data-el]')
+  _initElements(component = this._component) {
+    const list = component.querySelectorAll('[data-el]')
 
     list.forEach(item => {
       const name = item.dataset.el
@@ -61,11 +59,19 @@ export default class BaseComponent {
 
   _initComponents() {
     for (const componentName of Object.keys(this._components)) {
-      const root = this._elements[componentName]
+      let root = this._elements[componentName]
       const { component } = this._components[componentName]
 
       if (root && component) {
-        root.insertAdjacentElement('afterbegin', component)
+        component.dataset.el = root.dataset.el
+
+        this._elements[root.dataset.el] = component
+
+        root.insertAdjacentElement('beforebegin', component)
+        root.remove()
+        root = null
+
+        this._initElements(component)
       }
     }
   }

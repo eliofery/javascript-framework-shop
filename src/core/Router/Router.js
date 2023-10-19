@@ -81,6 +81,7 @@ export default class Router extends Dispatcher {
     if (this._history === HISTORY_TYPE_ENUM.STATE) {
       return this._strippedPath()
     }
+
     return this._strippedHashPath()
   }
 

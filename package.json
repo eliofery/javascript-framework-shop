@@ -1,6 +1,6 @@
 {
   "name": "javascript-framework-shop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Интернет магазин недвижимости.",
   "keywords": [
     "webpack", "spa"
