@@ -41,19 +41,22 @@ export default class Link extends BaseComponent {
   _initComponent() {
     const link = document.createElement('a')
 
-    link.setAttribute('href', this._url)
-    link.innerHTML = this._html
-
     if (this._url === this._router.getUri()) {
       link.classList.add(this._activeClass)
     }
+
+    link.setAttribute('href', this._url)
+    link.innerHTML = this._html
 
     Object.entries(this._attributes).forEach(([prop, value]) => {
       link.setAttribute(prop, `${value}`)
     })
 
     this._component = link
-    Link._links.push(link)
+    Link._links.push({
+      link,
+      activeClass: this._activeClass,
+    })
   }
 
   _initListeners() {
@@ -74,13 +77,13 @@ export default class Link extends BaseComponent {
   }
 
   _toggleClass() {
-    Link._links.forEach(link => {
+    Link._links.forEach(({ link, activeClass }) => {
       const linkUri = new URL(link.href).pathname
 
       if (linkUri === this._router.getUri()) {
-        link.classList.add(this._activeClass)
+        link.classList.add(activeClass)
       } else {
-        link.classList.remove(this._activeClass)
+        link.classList.remove(activeClass)
       }
     })
   }
