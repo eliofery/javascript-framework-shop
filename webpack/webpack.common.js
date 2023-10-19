@@ -111,7 +111,7 @@ module.exports = merge(webpackBase, {
     new SvgSpriteHtmlWebpackPlugin({
       append: false, // вставить спрайт вначале <body> для false
       includeFiles: [
-        '../src/assets/icons/*.svg', // подключаемые в спрайт файлы
+        'src/assets/icons/*.svg', // подключаемые в спрайт файлы
       ],
     }),
 
