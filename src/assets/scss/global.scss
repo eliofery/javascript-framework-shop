@@ -1,3 +1,5 @@
+@import "variable";
+
 *,
 *::before,
 *::after {
@@ -19,7 +21,7 @@ body {
   min-width: 320px;
   margin: 0;
 
-  color: #222;
+  color: $color-black;
   font-size: 16px;
   font-family: Arial, sans-serif;
   line-height: 1.5;
@@ -27,7 +29,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #fff;
+  background-color: $color-white;
 }
 
 img {
@@ -35,6 +37,18 @@ img {
   height: auto;
 }
 
+.container {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .active {
   color: red;
 }
+
+#app {
+  height: 100%;
+}
+

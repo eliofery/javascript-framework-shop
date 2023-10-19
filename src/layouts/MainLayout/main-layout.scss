@@ -1,0 +1,16 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-layout header {
+}
+
+.main-layout main {
+  flex-grow: 1;
+}
+
+.main-layout footer {
+
+}
