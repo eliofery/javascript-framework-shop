@@ -1,0 +1,75 @@
+@import "@/assets/scss/variable";
+@import "@/assets/scss/mixin";
+
+.main-nav {
+  padding: 15px 0;
+}
+
+.main-nav .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-nav__logo {
+  color: $color-white;
+  font-weight: bold;
+  text-decoration: none;
+
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: darken($color-white, 20%);
+  }
+}
+
+.main-nav__list {
+  @include list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  column-gap: 40px;
+}
+
+.main-nav__item {
+
+}
+
+.main-nav__link {
+  display: flex;
+  align-items: center;
+
+  color: $color-white;
+  font-weight: bold;
+  text-decoration: none;
+  column-gap: 5px;
+
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: darken($color-white, 20%);
+  }
+}
+
+.main-nav__link svg {
+  color: $color-white;
+}
+
+.main-nav__link:hover svg,
+.main-nav__link:focus svg {
+  color: darken($color-white, 10%);
+}
+
+@media screen and (max-width: 470px) {
+  .main-nav__list {
+    column-gap: 20px;
+  }
+
+  .main-nav__link {
+    overflow: hidden;
+
+    text-indent: -900px;
+  }
+}
