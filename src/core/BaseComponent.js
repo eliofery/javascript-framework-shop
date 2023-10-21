@@ -37,6 +37,10 @@ export default class BaseComponent {
     this._initListeners()
   }
 
+  _asyncData() {
+    // Абстрактный метод!
+  }
+
   // Создание ноды компонента
   _initComponent() {
     const wrapper = document.createElement('div')
