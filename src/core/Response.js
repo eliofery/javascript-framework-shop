@@ -16,7 +16,7 @@ export default class Response {
     const response = new Response()
     Response._initialization = false
 
-    response._baseUrl = options.baseUrl
+    response._baseUrl = options.baseUrl ?? ''
     delete options.baseUrl
     response._options = options
 
