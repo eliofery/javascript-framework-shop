@@ -1,55 +1,57 @@
 export default class Store {
-  /**
-   * Разрешение на создание экземпляра класса
-   *
-   * @type {boolean}
-   * @private
-   */
-  static _initializing = false
+  _reducers = []
 
-  /**
-   * Экземпляр класса
-   *
-   * @type {null}
-   * @private
-   */
-  static _instance = null
-
-  _reducers = {}
-
-  _store = {}
+  _state = {}
 
   _listeners = {}
 
-  constructor() {
-    if (!Store._initializing) {
-      throw new TypeError('Нельзя напрямую создать экземпляр данного класса')
+  constructor(reducers = [], initState = {}) {
+    this._reducers = reducers
+    this._state = initState
+  }
+
+  getState(name) {
+    if (this._state[name]) {
+      return this._state[name]
+    }
+
+    return this._state
+  }
+
+  setState(newState) {
+    this._state = newState
+  }
+
+  subscribe(name, callback) {
+    if (!this._listeners[name]) {
+      this._listeners[name] = []
+    }
+
+    this._listeners[name].push(callback)
+
+    return () => {
+      this._listeners = this._listeners[name].filter(
+        listener => listener !== callback,
+      )
     }
   }
 
-  /**
-   * Создание экземпляра класса
-   *
-   * @returns {*|null}
-   */
-  static get instance() {
-    if (this._instance instanceof this) {
-      return this._instance
+  dispatch(action) {
+    for (const reducer of this._reducers) {
+      const previousState = this.getState()
+      const newState = reducer(previousState, action)
+
+      this.setState(newState)
+
+      const listeners = this._listeners[action.type]
+
+      if (listeners) {
+        const currentState = this.getState()
+
+        for (const listener of listeners) {
+          listener(currentState)
+        }
+      }
     }
-
-    Store._initializing = true
-    this._instance = new this()
-    Store._initializing = false
-
-    return this._instance
-  }
-
-  static createStore(reducers = {}, initStore = {}) {
-    const store = Store.instance
-
-    store._reducers = { ...reducers }
-    store._store = { ...initStore }
-
-    return store
   }
 }
