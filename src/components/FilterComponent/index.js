@@ -1,15 +1,21 @@
 import BaseComponent from '@/core/BaseComponent'
 import InfoService from '@/services/InfoService'
+import ProductService from '@/services/ProductService'
 import store from '@/store'
-import { ADD_FILTER, addFilter } from '@/reducers/filter'
+import { updateFilter } from '@/reducers/filterReducer'
+import QueryBuilder from '@/core/QueryBuilder'
 import { declOfNum } from '@/utils/string'
+import { debounce } from '@/utils/form'
 
 import '@/components/FilterComponent/main-filter.scss'
 
 const { loadInfo } = InfoService
+const { loadFilterProducts } = ProductService
 
 export default class FilterComponent extends BaseComponent {
   _data = {}
+
+  _query = {}
 
   constructor() {
     super()
@@ -19,18 +25,13 @@ export default class FilterComponent extends BaseComponent {
   }
 
   async _loadData() {
+    this._query = new QueryBuilder('items')
     this._data.info = await loadInfo()
     this._data.products = store.getState('products')
   }
 
   async _updateData() {
-    const unsubscribe = store.subscribe(ADD_FILTER, state => {
-      // eslint-disable-next-line
-      console.log(state)
-    })
-
-    store.dispatch(addFilter({ id: 1222 }))
-    unsubscribe()
+    const { info, products } = this._data
 
     const {
       complexNames,
@@ -39,26 +40,16 @@ export default class FilterComponent extends BaseComponent {
       priceMax,
       squareMin,
       squareMax,
-    } = this._data.info
-
-    const { products } = this._data
+    } = info
 
     this.update({
       place: this._place(complexNames),
       room: this._room(roomValues),
-      sqMin: this._area({ squareMin, squareMax }),
-      sqMax: this._area({ squareMin, squareMax }, 'до'),
-      priceMin: this._price({ priceMin, priceMax }),
-      priceMax: this._price({ priceMin, priceMax }, 'до'),
-      submit: this._submit(
-        products.length,
-        count =>
-          `Показать ${count} ${declOfNum(count, [
-            'объект',
-            'объекта',
-            'объектов',
-          ])}`,
-      ),
+      sqMin: this._area({ squareMin, squareMax }, 'sqmin'),
+      sqMax: this._area({ squareMin, squareMax }, 'sqmax', 'до'),
+      priceMin: this._price({ priceMin, priceMax }, 'pricemin'),
+      priceMax: this._price({ priceMin, priceMax }, 'pricemax', 'до'),
+      submit: this._submit(products.length),
     })
   }
 
@@ -68,7 +59,7 @@ export default class FilterComponent extends BaseComponent {
         <div class="container">
           <h2 class="main-filter__title title">Выбор квартир:</h2>
 
-          <form class="main-filter__form" method="get">
+          <form class="main-filter__form" method="get" data-el="form">
             <div class="main-filter__items">
               <div class="main-filter__item">
                 <h3 class="main-filter__label">Выбор проекта:</h3>
@@ -187,33 +178,87 @@ export default class FilterComponent extends BaseComponent {
     return options
   }
 
-  _area({ squareMin, squareMax }, title = 'от') {
+  _area({ squareMin, squareMax }, name, title = 'от') {
     const placeholder = title === 'от' ? squareMin : squareMax
 
     return `
       <label class="main-filter__input-wrap">
         <span class="main-filter__input-title">${title}</span>
-        <input class="main-filter__input" type="number" name="pricemin" min="${squareMin}" max="${squareMax}" placeholder="${placeholder}">
+        <input class="main-filter__input" type="number" name="${name}" min="${squareMin}" max="${squareMax}" placeholder="${placeholder}">
         <span class="main-filter__input-title main-filter__input-title--accent">м²</span>
       </label>
     `
   }
 
-  _price({ priceMin, priceMax }, title = 'от') {
+  _price({ priceMin, priceMax }, name, title = 'от') {
     const placeholder = title === 'от' ? priceMin : priceMax
 
     return `
       <label class="main-filter__input-wrap">
         <span class="main-filter__input-title">${title}</span>
-        <input class="main-filter__input main-filter__input--large" type="number" name="pricemin" min="${priceMin}" max="${priceMax}" placeholder="${placeholder}">
+        <input class="main-filter__input main-filter__input--large" type="number" name="${name}" min="${priceMin}" max="${priceMax}" placeholder="${placeholder}">
         <span class="main-filter__input-title main-filter__input-title--accent">₸</span>
       </label>
     `
   }
 
   _submit(num, callback) {
-    return callback(num)
+    this.elements.submit.disabled = false
+
+    if (num < 1) {
+      this.elements.submit.disabled = true
+
+      return 'Нет таких объектов'
+    }
+
+    if (callback) {
+      return callback(num)
+    }
+
+    return `Показать ${num} ${declOfNum(num, [
+      'объект',
+      'объекта',
+      'объектов',
+    ])}`
   }
 
-  _initListeners() {}
+  _initListeners() {
+    const { form, place, room, sqMin, sqMax, priceMin, priceMax } =
+      this.elements
+
+    form.addEventListener(
+      'change',
+      debounce(async evt => {
+        evt.preventDefault()
+
+        this._query.addComplex(place)
+        this._query.addRoom(room)
+        this._query.addSquare(sqMin, sqMax)
+        this._query.addPrice(priceMin, priceMax)
+
+        this._data.product = await loadFilterProducts(this._query)
+
+        this.update({
+          submit: this._submit(this._data.product.length),
+        })
+      }),
+      { signal: this._abortController.signal },
+    )
+
+    form.addEventListener(
+      'submit',
+      async evt => {
+        evt.preventDefault()
+
+        await this._loadData()
+
+        store.dispatch(updateFilter(this._data.product))
+      },
+      { signal: this._abortController.signal },
+    )
+
+    form.addEventListener('reset', () => this._updateData(), {
+      signal: this._abortController.signal,
+    })
+  }
 }
