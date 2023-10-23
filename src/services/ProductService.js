@@ -1,7 +1,7 @@
 import Response from '@/core/Response'
 
 const apiClient = Response.create({
-  baseUrl: `${process.env.API_URL}`,
+  baseUrl: process.env.API_URL,
   credentials: 'omit',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -9,7 +9,11 @@ const apiClient = Response.create({
 })
 
 export default {
-  loadProducts() {
+  loadAllProducts() {
     return apiClient.get('/items')
+  },
+
+  loadFilterProducts(query) {
+    return apiClient.get(query)
   },
 }
