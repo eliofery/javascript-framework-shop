@@ -1,11 +1,9 @@
 import Store from '@/core/Store'
-import { filterReducer, filterState } from '@/reducers/filter'
+import { filterReducer, filterState } from '@/reducers/filterReducer'
 
 const reducers = [filterReducer]
 
-const initState = {
-  ...filterState,
-}
+const initState = { ...filterState }
 
 const store = new Store(reducers, initState)
 const storeKey = Symbol.for('storeKey')
