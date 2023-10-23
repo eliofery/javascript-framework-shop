@@ -1,22 +1,36 @@
 import BaseComponent from '@/core/BaseComponent'
 import InfoService from '@/services/InfoService'
+import store from '@/store'
+import { ADD_FILTER, addFilter } from '@/reducers/filter'
+import { declOfNum } from '@/utils/string'
 
 import '@/components/FilterComponent/main-filter.scss'
 
 const { loadInfo } = InfoService
 
 export default class FilterComponent extends BaseComponent {
-  _data = []
+  _data = {}
 
   constructor() {
     super()
 
     this._init()
-    this._asyncData().then()
+    this._afterInit().then()
   }
 
-  async _asyncData() {
-    this.data = await loadInfo()
+  async _loadData() {
+    this._data.info = await loadInfo()
+    this._data.products = store.getState('products')
+  }
+
+  async _updateData() {
+    const unsubscribe = store.subscribe(ADD_FILTER, state => {
+      // eslint-disable-next-line
+      console.log(state)
+    })
+
+    store.dispatch(addFilter({ id: 1222 }))
+    unsubscribe()
 
     const {
       complexNames,
@@ -25,7 +39,9 @@ export default class FilterComponent extends BaseComponent {
       priceMax,
       squareMin,
       squareMax,
-    } = this.data
+    } = this._data.info
+
+    const { products } = this._data
 
     this.update({
       place: this._place(complexNames),
@@ -34,7 +50,15 @@ export default class FilterComponent extends BaseComponent {
       sqMax: this._area({ squareMin, squareMax }, 'до'),
       priceMin: this._price({ priceMin, priceMax }),
       priceMax: this._price({ priceMin, priceMax }, 'до'),
-      submit: this._submit(19, count => `Показать ${count} объектов`),
+      submit: this._submit(
+        products.length,
+        count =>
+          `Показать ${count} ${declOfNum(count, [
+            'объект',
+            'объекта',
+            'объектов',
+          ])}`,
+      ),
     })
   }
 
@@ -125,7 +149,7 @@ export default class FilterComponent extends BaseComponent {
             </div>
 
             <div class="main-filter__buttons">
-              <button class="main-filter__submit" type="submit" data-el="submit">Показать 119 объектов</button>
+              <button class="main-filter__submit" type="submit" data-el="submit">Показать все объекты</button>
               <button class="main-filter__reset" type="reset">Сбросить фильтр</button>
             </div>
           </form>
@@ -151,11 +175,11 @@ export default class FilterComponent extends BaseComponent {
 
     let options = ''
 
-    data.forEach((item, key) => {
+    data.forEach(item => {
       options += `
         <li class="main-filter__checkbox-item">
-          <input id="room_${key}" class="sr-only" type="checkbox" name="rooms[]" value="${item}">
-          <label for="room_${key}" class="main-filter__checkbox">${item}</label>
+          <input id="room_${item}" class="sr-only" type="checkbox" name="rooms[]" value="${item}">
+          <label for="room_${item}" class="main-filter__checkbox">${item}</label>
         </li>
       `
     })

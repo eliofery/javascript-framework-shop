@@ -37,7 +37,16 @@ export default class BaseComponent {
     this._initListeners()
   }
 
-  _asyncData() {
+  async _afterInit() {
+    await this._loadData()
+    await this._updateData()
+  }
+
+  _loadData() {
+    // Абстрактный метод!
+  }
+
+  _updateData() {
     // Абстрактный метод!
   }
 
