@@ -1,0 +1,57 @@
+@import "@/assets/scss/mixin";
+
+.main-listing {
+
+}
+
+.main-listing__state {
+  display: flex;
+  margin: 30px 0;
+}
+
+.main-listing__state-left {
+  display: flex;
+  align-items: center;
+
+  column-gap: 20px;
+}
+
+.main-listing__state-right {
+  margin-left: auto;
+}
+
+.main-listing__sort-label {
+  font-size: 18px;
+}
+
+.main-listing__sort {
+  padding: 10px 5px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.main-listing__view {
+  @include list-reset;
+
+  display: flex;
+
+  column-gap: 10px;
+}
+
+.main-listing__view-item {
+
+}
+
+.main-listing__view-toggle {
+
+  cursor: pointer;
+  opacity: 0.5;
+
+  transition: opacity 0.3s ease;
+}
+
+input[type="radio"]:checked + .main-listing__view-toggle {
+  opacity: 1;
+}

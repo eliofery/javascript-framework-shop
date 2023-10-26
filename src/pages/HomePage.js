@@ -1,8 +1,10 @@
 import BasePage from '@/core/BasePage'
 import FilterComponent from '@/components/FilterComponent'
+import ListingComponent from '@/components/ListingComponent'
 
 const components = {
   filter: new FilterComponent(),
+  listing: new ListingComponent(),
 }
 
 export default class HomePage extends BasePage {
@@ -19,6 +21,7 @@ export default class HomePage extends BasePage {
     return `
       <div>
         <div data-el="filter"><!-- FilterComponent --></div>
+        <div data-el="listing"><!-- ListingComponent --></div>
       </div>
     `
   }
