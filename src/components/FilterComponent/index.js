@@ -2,7 +2,7 @@ import BaseComponent from '@/core/BaseComponent'
 import InfoService from '@/services/InfoService'
 import ProductService from '@/services/ProductService'
 import store from '@/store'
-import { updateFilter } from '@/reducers/filterReducer'
+import { submitFilter, resetFilter } from '@/reducers/filterReducer'
 import QueryBuilder from '@/core/QueryBuilder'
 import { declOfNum } from '@/utils/string'
 import { debounce } from '@/utils/form'
@@ -21,7 +21,11 @@ export default class FilterComponent extends BaseComponent {
     super()
 
     this._init()
-    this._afterInit().then()
+  }
+
+  async _afterInit() {
+    await this._loadData()
+    await this._updateData()
   }
 
   async _loadData() {
@@ -236,10 +240,10 @@ export default class FilterComponent extends BaseComponent {
         this._query.addSquare(sqMin, sqMax)
         this._query.addPrice(priceMin, priceMax)
 
-        this._data.product = await loadFilterProducts(this._query)
+        this._data.products = await loadFilterProducts(this._query)
 
         this.update({
-          submit: this._submit(this._data.product.length),
+          submit: this._submit(this._data.products.length),
         })
       }),
       { signal: this._abortController.signal },
@@ -250,15 +254,21 @@ export default class FilterComponent extends BaseComponent {
       async evt => {
         evt.preventDefault()
 
-        await this._loadData()
-
-        store.dispatch(updateFilter(this._data.product))
+        store.dispatch(submitFilter(this._data.products))
       },
       { signal: this._abortController.signal },
     )
 
-    form.addEventListener('reset', () => this._updateData(), {
-      signal: this._abortController.signal,
-    })
+    form.addEventListener(
+      'reset',
+      async () => {
+        store.dispatch(resetFilter())
+
+        await this._afterInit()
+      },
+      {
+        signal: this._abortController.signal,
+      },
+    )
   }
 }

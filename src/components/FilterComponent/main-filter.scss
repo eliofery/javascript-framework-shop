@@ -127,6 +127,7 @@ input:checked + .main-filter__checkbox {
 
   font-size: 16px;
 
+  background-color: $color-grey;
   border: 1px solid lighten($color-black, 70%);
 
   &--large {
