@@ -30,8 +30,8 @@ export default class QueryBuilder {
   }
 
   addSquare(sqMin, sqMax) {
-    sqMin = document.querySelector('[name="sqmin"]')
-    sqMax = document.querySelector('[name="sqmax"]')
+    sqMin = sqMin.querySelector('[name="sqmin"]')
+    sqMax = sqMax.querySelector('[name="sqmax"]')
 
     this._toggleQuery(sqMin)
     this._toggleQuery(sqMax)
@@ -40,8 +40,8 @@ export default class QueryBuilder {
   }
 
   addPrice(priceMin, priceMax) {
-    priceMin = document.querySelector('[name="pricemin"]')
-    priceMax = document.querySelector('[name="pricemax"]')
+    priceMin = priceMin.querySelector('[name="pricemin"]')
+    priceMax = priceMax.querySelector('[name="pricemax"]')
 
     this._toggleQuery(priceMin)
     this._toggleQuery(priceMax)
