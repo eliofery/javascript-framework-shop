@@ -18,8 +18,7 @@ export default class Link extends BaseComponent {
     this._attributes = attributes
     this._activeClass = activeClass
 
-    this._initComponent()
-    this._initListeners()
+    this._init()
   }
 
   get router() {
