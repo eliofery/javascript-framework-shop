@@ -18,7 +18,7 @@ export default class Store {
     return this._state
   }
 
-  setState(newState) {
+  _setState(newState) {
     this._state = newState
   }
 
@@ -41,7 +41,7 @@ export default class Store {
       const previousState = this.getState()
       const newState = reducer(previousState, action)
 
-      this.setState(newState)
+      this._setState(newState)
 
       const listeners = this._listeners[action.type]
 
