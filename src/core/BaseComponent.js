@@ -30,16 +30,30 @@ export default class BaseComponent {
     this._components = components
   }
 
+  _reloadComponents(components) {
+    this._setComponents(components)
+    this._initComponents()
+  }
+
   _init() {
+    this._beforeInit().then()
     this._initComponent()
     this._initElements()
     this._initComponents()
     this._initListeners()
+    this._afterInit().then()
+  }
+
+  async _beforeInit() {
+    // Абстрактный метод!
+    // await this._loadData()
+    // await this._updateData()
   }
 
   async _afterInit() {
-    await this._loadData()
-    await this._updateData()
+    // Абстрактный метод!
+    // await this._loadData()
+    // await this._updateData()
   }
 
   _loadData() {
@@ -73,7 +87,11 @@ export default class BaseComponent {
   _initComponents() {
     for (const componentName of Object.keys(this._components)) {
       let root = this._elements[componentName]
-      const { component } = this._components[componentName]
+      const { component } =
+        typeof this._components[componentName] === 'object' &&
+        !Array.isArray(this._components[componentName])
+          ? this._components[componentName]
+          : new this._components[componentName]()
 
       if (root && component) {
         component.dataset.el = root.dataset.el
