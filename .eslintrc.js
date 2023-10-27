@@ -28,6 +28,7 @@ module.exports = {
     'default-param-last': 'off',
     'new-cap': ['error', { properties: false }],
     'no-plusplus': 'off',
+    'no-prototype-builtins': 'off',
     'no-restricted-syntax': 'off',
     'no-nested-ternary': 'warn',
     'no-obj-calls': 'warn',

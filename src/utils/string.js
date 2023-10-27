@@ -17,3 +17,27 @@ export const declOfNum = (number, titles) => {
       : cases[number % 10 < 5 ? number % 10 : 5]
   ]
 }
+
+/**
+ * Конвертирует строку в camelCase
+ *
+ * Пример: total_price -> totalPrice
+ *
+ * @param obj
+ * @returns {{}}
+ */
+export const convertKeysToCamelCase = obj => {
+  const camelCaseObj = {}
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const camelCaseKey = key.replace(/_(\w)/g, (_, letter) =>
+        letter.toUpperCase(),
+      )
+
+      camelCaseObj[camelCaseKey] = obj[key]
+    }
+  }
+
+  return camelCaseObj
+}
