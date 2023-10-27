@@ -81,15 +81,23 @@ export default class ListingComponent extends BaseComponent {
 
   _initListeners() {
     this._elements.toggleList.addEventListener('click', () => {
-      components.productList = CardList
+      if (!this._elements.toggleList.dataset.checked) {
+        components.productList = CardList
+        this._reloadComponents(components)
+      }
 
-      this._reloadComponents(components)
+      this._elements.toggleList.dataset.checked = 'true'
+      this._elements.toggleTable.removeAttribute('data-checked')
     })
 
     this._elements.toggleTable.addEventListener('click', () => {
-      components.productList = CardTable
+      if (!this._elements.toggleTable.dataset.checked) {
+        components.productList = CardTable
+        this._reloadComponents(components)
+      }
 
-      this._reloadComponents(components)
+      this._elements.toggleList.removeAttribute('data-checked')
+      this._elements.toggleTable.dataset.checked = 'true'
     })
   }
 }
