@@ -1,13 +1,13 @@
 import BaseComponent from '@/core/BaseComponent'
 import store from '@/store'
 import { SUBMIT_FILTER, RESET_FILTER } from '@/reducers/filterReducer'
-import CardList from '@/components/CardList'
+import CardListComponent from '@/components/CardListComponent'
 import CardTable from '@/components/CardTable'
 
 import '@/components/ListingComponent/main-listing.scss'
 
 const components = {
-  productList: CardList.bind(null),
+  productList: CardListComponent.bind(null),
 }
 
 export default class ListingComponent extends BaseComponent {
@@ -72,7 +72,7 @@ export default class ListingComponent extends BaseComponent {
           </div>
 
           <div class="main-listing__content">
-            <div data-el="productList"><!-- CardList || CardTable --></div>
+            <div data-el="productList"><!-- CardListComponent || CardTableComponent --></div>
           </div>
         </div>
       </section>
@@ -82,7 +82,7 @@ export default class ListingComponent extends BaseComponent {
   _initListeners() {
     this._elements.toggleList.addEventListener('click', () => {
       if (!this._elements.toggleList.dataset.checked) {
-        components.productList = CardList
+        components.productList = CardListComponent
         this._reloadComponents(components)
       }
 
