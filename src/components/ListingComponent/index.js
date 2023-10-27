@@ -1,13 +1,18 @@
 import BaseComponent from '@/core/BaseComponent'
 import store from '@/store'
-import { SUBMIT_FILTER, RESET_FILTER } from '@/reducers/filterReducer'
+import {
+  SUBMIT_FILTER,
+  RESET_FILTER,
+  SORT_FILTER,
+  sortFilter,
+} from '@/reducers/filterReducer'
 import CardListComponent from '@/components/CardListComponent'
-import CardTable from '@/components/CardTable'
+import CardTableComponent from '@/components/CardTableComponent'
 
 import '@/components/ListingComponent/main-listing.scss'
 
 const components = {
-  productList: CardListComponent.bind(null),
+  productList: CardTableComponent.bind(null),
 }
 
 export default class ListingComponent extends BaseComponent {
@@ -29,6 +34,10 @@ export default class ListingComponent extends BaseComponent {
     })
 
     store.subscribe(RESET_FILTER, () => {
+      this._reloadComponents(components)
+    })
+
+    store.subscribe(SORT_FILTER, () => {
       this._reloadComponents(components)
     })
   }
@@ -92,12 +101,35 @@ export default class ListingComponent extends BaseComponent {
 
     this._elements.toggleTable.addEventListener('click', () => {
       if (!this._elements.toggleTable.dataset.checked) {
-        components.productList = CardTable
+        components.productList = CardTableComponent
         this._reloadComponents(components)
       }
 
       this._elements.toggleList.removeAttribute('data-checked')
       this._elements.toggleTable.dataset.checked = 'true'
+    })
+
+    this._elements.sortBy.addEventListener('click', evt => {
+      const sortType = evt.currentTarget.value
+      const products = store.getState('products')
+
+      const compare = (a, b) => a - b
+
+      if (/price/.test(sortType)) {
+        products.sort((a, b) =>
+          sortType === 'priceASC'
+            ? compare(a.price_total, b.price_total)
+            : compare(b.price_total, a.price_total),
+        )
+      } else if (/square/.test(sortType)) {
+        products.sort((a, b) =>
+          sortType === 'squareASC'
+            ? compare(a.square, b.square)
+            : compare(b.square, a.square),
+        )
+      }
+
+      store.dispatch(sortFilter(products))
     })
   }
 }
