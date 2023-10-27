@@ -10,5 +10,17 @@
 }
 
 .card-list__item {
+  width: calc(100% / 3 - 20px);
+}
 
+@media screen and (max-width: 1170px) {
+  .card-list__item {
+    width: calc(100% / 2 - 15px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card-list__item {
+    width: 100%;
+  }
 }
