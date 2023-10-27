@@ -6,7 +6,8 @@
 
 .main-listing__state {
   display: flex;
-  margin: 30px 0;
+  align-items: center;
+  padding: 30px 0;
 }
 
 .main-listing__state-left {
@@ -45,6 +46,9 @@
 }
 
 .main-listing__view-toggle {
+  display: block;
+
+  line-height: 0;
 
   cursor: pointer;
   opacity: 0.5;
@@ -54,4 +58,8 @@
 
 input[type="radio"]:checked + .main-listing__view-toggle {
   opacity: 1;
+}
+
+.main-listing__content {
+  padding: 30px 0;
 }
