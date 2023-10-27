@@ -1,0 +1,14 @@
+@import "@/assets/scss/variable";
+@import "@/assets/scss/mixin";
+
+.card-list {
+  @include list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card-list__item {
+
+}
