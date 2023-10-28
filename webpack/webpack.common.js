@@ -39,14 +39,22 @@ module.exports = merge(webpackBase, {
     rules: [
       // правило для обработки изображений
       {
-        test: /\.(png|jpe?g|gif|svg|webp)$/i,
+        test: /\.(png|jpe?g|gif|webp)$/i,
         use: imageLoaders,
       },
 
+      // {
+      //   test: /\.svg$/,
+      //   use: SvgSpriteHtmlWebpackPlugin.getLoader(),
+      //   exclude: /node_modules/,
+      // },
+
+      // встроенные ресурсы
+      // background: url("@/assets/icons/icon-blank.svg")
       {
         test: /\.svg$/,
-        use: SvgSpriteHtmlWebpackPlugin.getLoader(),
-        exclude: /node_modules/,
+        type: 'asset/inline',
+        resourceQuery: /inline/,
       },
 
       // правило для обработки шрифтов

@@ -1,6 +1,6 @@
 {
   "name": "javascript-framework-shop",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Интернет магазин недвижимости.",
   "keywords": [
     "webpack",
@@ -52,18 +52,19 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-order": "^6.0.3",
     "stylelint-scss": "^5.2.1",
+    "svg-inline-loader": "^0.8.2",
     "terser-webpack-plugin": "^5.3.9",
-    "webpack-cli": "^5.1.4"    
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "webpack": "^5.89.0",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-merge": "^5.9.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "dotenv": "^16.3.1",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
-    "copy-webpack-plugin": "^11.0.0",
     "svg-sprite-html-webpack": "^2.4.1",
-    "dotenv": "^16.3.1"
+    "webpack": "^5.89.0",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
   },
   "lint-staged": {
     "*": "editorconfig-checker --exclude '.git|.husky|node_modules|.eslintcache'",
