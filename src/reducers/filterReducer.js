@@ -43,7 +43,7 @@ export const filterReducer = (previousState, action) => {
       }
 
     default:
-      return previousState
+      return null
   }
 }
 

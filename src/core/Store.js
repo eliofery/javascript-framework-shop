@@ -41,15 +41,17 @@ export default class Store {
       const previousState = this.getState()
       const newState = reducer(previousState, action)
 
-      this._setState(newState)
+      if (newState) {
+        this._setState(newState)
 
-      const listeners = this._listeners[action.type]
+        const listeners = this._listeners[action.type]
 
-      if (listeners) {
-        const currentState = this.getState()
+        if (listeners) {
+          const currentState = this.getState()
 
-        for (const listener of listeners) {
-          listener(currentState)
+          for (const listener of listeners) {
+            listener(currentState)
+          }
         }
       }
     }
