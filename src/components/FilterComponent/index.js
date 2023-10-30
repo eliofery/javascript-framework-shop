@@ -3,7 +3,7 @@ import InfoService from '@/services/InfoService'
 import ProductService from '@/services/ProductService'
 import store from '@/store'
 import { submitFilter, resetFilter } from '@/reducers/filterReducer'
-import QueryBuilder from '@/core/QueryBuilder'
+import FilterQueryBuilder from '@/components/FilterComponent/FilterQueryBuilder'
 import { declOfNum } from '@/utils/string'
 import { debounce } from '@/utils/form'
 
@@ -29,7 +29,7 @@ export default class FilterComponent extends BaseComponent {
   }
 
   async _loadData() {
-    this._query = new QueryBuilder('items')
+    this._query = new FilterQueryBuilder('items')
     this._data.info = await loadInfo()
     this._data.products = store.getState('products')
   }

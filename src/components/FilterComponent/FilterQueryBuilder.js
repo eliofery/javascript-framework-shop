@@ -1,4 +1,4 @@
-export default class QueryBuilder {
+export default class FilterQueryBuilder {
   _baseUrl = process.env.API_URL
 
   _url = {}
