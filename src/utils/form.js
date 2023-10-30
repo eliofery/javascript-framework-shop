@@ -11,3 +11,7 @@ export const debounce = (callback, delay = 300) => {
     }, delay)
   }
 }
+
+export const compare = (a, b) => a - b
+
+export const compareString = (a, b) => a.localeCompare(b)

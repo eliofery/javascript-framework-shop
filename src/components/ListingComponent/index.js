@@ -8,11 +8,13 @@ import {
 } from '@/reducers/filterReducer'
 import CardListComponent from '@/components/CardListComponent'
 import CardTableComponent from '@/components/CardTableComponent'
+import { compare } from '@/utils/form'
 
 import '@/components/ListingComponent/main-listing.scss'
+import { SORT_PRODUCT } from '@/reducers/sortReducer'
 
 const components = {
-  productList: CardTableComponent.bind(null),
+  productList: CardListComponent.bind(null),
 }
 
 export default class ListingComponent extends BaseComponent {
@@ -40,6 +42,10 @@ export default class ListingComponent extends BaseComponent {
     store.subscribe(SORT_FILTER, () => {
       this._reloadComponents(components)
     })
+
+    store.subscribe(SORT_PRODUCT, () => {
+      this._reloadComponents(components)
+    })
   }
 
   async _updateData() {
@@ -53,7 +59,7 @@ export default class ListingComponent extends BaseComponent {
           <h2 class="sr-only">Список объектов</h2>
 
           <div class="main-listing__state">
-            <div class="main-listing__state-left">
+            <div class="main-listing__state-left" data-el="sort">
               <label for="sortBy" class="main-listing__sort-label">Сортировать</label>
               <select id="sortBy" class="main-listing__sort" name="sortBy" data-el="sortBy">
                 <option value="priceASC">по цене ↑</option>
@@ -66,13 +72,13 @@ export default class ListingComponent extends BaseComponent {
               <ul class="main-listing__view">
                 <li class="main-listing__view-item">
                   <input id="cardList" class="sr-only" type="radio" name="viewType" value="cardList" checked>
-                  <label for="cardList" class="main-listing__view-toggle" aria-label="Отображать карточки товара в виде плиток" title="Плитки" data-el="toggleList">
+                  <label for="cardList" class="main-listing__view-toggle" aria-label="Отображать карточки товара в виде плиток" title="Плитки" data-el="toggleList" tabindex="0">
                     <svg width="22" height="22"><use xlink:href="#icon-card-list"></use></svg>
                   </label>
                 </li>
                 <li class="main-listing__view-item">
                   <input id="cardTable" class="sr-only" type="radio" name="viewType" value="cardTable">
-                  <label for="cardTable" class="main-listing__view-toggle" aria-label="Отображать карточки товара в виде таблицы" title="Таблица" data-el="toggleTable">
+                  <label for="cardTable" class="main-listing__view-toggle" aria-label="Отображать карточки товара в виде таблицы" title="Таблица" data-el="toggleTable" tabindex="0">
                     <svg width="22" height="22"><use xlink:href="#icon-card-table"></use></svg>
                   </label>
                 </li>
@@ -97,6 +103,7 @@ export default class ListingComponent extends BaseComponent {
 
       this._elements.toggleList.dataset.checked = 'true'
       this._elements.toggleTable.removeAttribute('data-checked')
+      this._elements.sort.removeAttribute('style')
     })
 
     this._elements.toggleTable.addEventListener('click', () => {
@@ -107,13 +114,12 @@ export default class ListingComponent extends BaseComponent {
 
       this._elements.toggleList.removeAttribute('data-checked')
       this._elements.toggleTable.dataset.checked = 'true'
+      this._elements.sort.style.opacity = '0'
     })
 
     this._elements.sortBy.addEventListener('click', evt => {
       const sortType = evt.currentTarget.value
       const products = store.getState('products')
-
-      const compare = (a, b) => a - b
 
       if (/price/.test(sortType)) {
         products.sort((a, b) =>
