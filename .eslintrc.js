@@ -34,6 +34,7 @@ module.exports = {
     'no-obj-calls': 'warn',
     'no-undefined': 'warn',
     'object-curly-newline': 'off',
+    'no-return-assign': 'off',
     'import/prefer-default-export': 'off',
     'max-len': 'off',
     'no-multi-assign': 'off',
