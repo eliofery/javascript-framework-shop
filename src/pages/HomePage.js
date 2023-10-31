@@ -19,7 +19,7 @@ export default class HomePage extends BasePage {
 
   get _template() {
     return `
-      <div>
+      <div class="home-page">
         <div data-el="filter"><!-- FilterComponent --></div>
         <div data-el="listing"><!-- ListingComponent --></div>
       </div>

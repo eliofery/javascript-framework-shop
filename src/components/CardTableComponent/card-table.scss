@@ -17,7 +17,12 @@
 }
 
 .card-table__filter {
+  position: sticky;
+  top: 0;
+
   margin-bottom: 10px;
+
+  background-color: $color-grey;
 }
 
 .card-table__toggle {
@@ -99,5 +104,34 @@
   &:hover,
   &:focus {
     color: $color-red;
+  }
+}
+
+@media screen and (max-width: 1190px) {
+  //.card-table__filter,
+  //.card-table__content {
+  //  overflow-x: auto;
+  //}
+
+  .card-table__col {
+    flex: 1 0 120px;
+    width: auto;
+  }
+
+  .card-table__filter {
+    margin: 10px;
+  }
+
+  .card-table__card {
+    padding: 0;
+  }
+
+  .card-table__card .card-table__col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+
+    background-color: $color-white;
   }
 }
