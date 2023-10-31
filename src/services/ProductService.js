@@ -13,6 +13,10 @@ export default {
     return apiClient.get('/items')
   },
 
+  loadProduct(id) {
+    return apiClient.get(`/items/${id}`)
+  },
+
   loadFilterProducts(query) {
     return apiClient.get(query)
   },
