@@ -2,6 +2,7 @@ import BaseComponent from '@/core/BaseComponent'
 import { priceFormat } from '@/utils/num'
 
 import '@/components/CardComponent/product-card.scss'
+import Link from '@/core/Link'
 
 export default class CardComponent extends BaseComponent {
   constructor(data = {}) {
@@ -32,10 +33,17 @@ export default class CardComponent extends BaseComponent {
     //
   }
 
-  get _template() {
-    return `
-      <article class="product-card">
-        <a class="product-card__link" href="/item/${this._id}">
+  _initComponent() {
+    this._component = document.createElement('article')
+    this._component.classList.add('product-card')
+    this._component.append(this._link())
+  }
+
+  _link() {
+    return new Link({
+      url: `/item/${this._id}`,
+      attributes: { class: 'product-card__link' },
+      html: `
           <header class="product-card__header">
             <h2 class="product-card__title">ЖК ${this._complexName}</h2>
             <span class="product-card__favorite" data-el="favorite" tabindex="0">
@@ -69,9 +77,8 @@ export default class CardComponent extends BaseComponent {
               this._floorsTotal
             }</span>
           </footer>
-        </a>
-      </article>
-    `
+    `,
+    }).component
   }
 
   _initListeners() {}
