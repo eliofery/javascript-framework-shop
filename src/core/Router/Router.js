@@ -25,15 +25,16 @@ export default class Router extends Dispatcher {
   }
 
   render = async () => {
-    const route = this._findRoute(this.getUri())
+    const { component } = this._findRoute(this.getUri())
 
-    if (!route) {
+    if (!component) {
       this._page404()
 
       return
     }
 
-    const page = await this._getComponent(route.component)
+    const params = this._getParams()
+    const page = await this._getComponent(component, params)
 
     if (page.layout) {
       await this._renderLayout(page.layout)
@@ -86,6 +87,27 @@ export default class Router extends Dispatcher {
   }
 
   /**
+   * Получение параметров из ссылки
+   *
+   * Пример: /foo/1/bar/2 => { foo: 1, bar: 2 }
+   *
+   * @returns {*}
+   * @private
+   */
+  _getParams() {
+    return this.getUri()
+      .slice(1)
+      .split('/')
+      .reduce((acc, item, index, array) => {
+        if (index % 2 === 0 && array[index + 1]) {
+          acc[item] = array[index + 1]
+        }
+
+        return acc
+      }, {})
+  }
+
+  /**
    * Поиск текущего роута
    *
    * @param route
@@ -100,7 +122,7 @@ export default class Router extends Dispatcher {
     })
   }
 
-  async _getComponent(component) {
+  async _getComponent(component, params = {}) {
     let Component = component
 
     if (Component instanceof Promise) {
@@ -109,6 +131,6 @@ export default class Router extends Dispatcher {
       Component = module.default
     }
 
-    return new Component()
+    return new Component(params)
   }
 }
