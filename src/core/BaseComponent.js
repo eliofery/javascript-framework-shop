@@ -125,14 +125,13 @@ export default class BaseComponent {
   destroy() {
     this._remove()
     this._removeListeners()
-
-    this._component = null
-    this._elements = {}
   }
 
   // Удаление компонента
   _remove() {
-    this._component?.remove()
+    // this._component?.remove()
+    this._component.innerHTML = ''
+    this._elements = {}
   }
 
   // Удаление прослушек событий
