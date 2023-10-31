@@ -40,4 +40,16 @@ export default class Response {
 
     return this._response(url.href, this._options)
   }
+
+  post(url = '', data = {}) {
+    url = new URL(url, this._baseUrl)
+
+    this._options = {
+      ...this._options,
+      method: 'post',
+      body: data,
+    }
+
+    return this._response(url.href, this._options)
+  }
 }
