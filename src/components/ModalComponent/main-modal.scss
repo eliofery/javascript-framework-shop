@@ -1,0 +1,174 @@
+@import "@/assets/scss/variable";
+@import "@/assets/scss/mixin";
+
+.main-modal {
+
+}
+
+.main-modal__wrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba($color-blue, 0.4);
+}
+
+.main-modal__content {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 600px;
+  margin: 0 20px;
+  padding: 20px;
+
+  background-color: $color-white;
+}
+
+.main-modal__title {
+  margin: 0 0 10px;
+
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.main-modal__title b {
+  display: block;
+  margin-top: 5px;
+
+  font-weight: normal;
+
+  font-size: 22px;
+}
+
+.main-modal__art {
+  margin: 0 0 25px;
+
+  color: #959595;
+  font-size: 14px;
+}
+
+.main-modal__form {
+
+}
+
+.main-modal__field {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  margin: 0 0 25px;
+
+  &--agree {
+    flex-direction: row;
+    align-items: baseline;
+
+    column-gap: 5px;
+  }
+
+  &--message {
+    color: $color-red;
+    font-size: 14px;
+  }
+}
+
+.main-modal__label {
+
+}
+
+.main-modal__input {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+
+  font: inherit;
+
+  border: 1px solid #a7a7a7;
+
+  &:focus {
+    border-color: #d08e8e;
+    border-style: solid;
+    border-width: 1px;
+    outline: none;
+  }
+}
+
+.main-modal__checkbox {
+
+}
+
+.main-modal__button {
+  width: 100%;
+  padding: 20px;
+
+  color: #fff;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  text-align: center;
+
+  background-color: $color-red;
+
+  border: none;
+  cursor: pointer;
+
+  transition: background-color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    background-color: lighten($color-red, 10%);
+  }
+}
+
+.main-modal__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: block;
+  padding: 8px 15px;
+
+  color: $color-white;
+  font-size: 18px;
+
+  background-color: $color-black;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition: 0.1s background-color ease-in;
+
+  &:hover,
+  &:focus {
+    background-color: lighten($color-black, 10%);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

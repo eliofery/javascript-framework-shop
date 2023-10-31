@@ -1,12 +1,11 @@
 import BasePage from '@/core/BasePage'
 import ProductService from '@/services/ProductService'
 import { priceFormat } from '@/utils/num'
+import ModalComponent from '@/components/ModalComponent'
 
 import '@/pages/ProductPage/product-page.scss'
 
 const { loadProduct } = ProductService
-
-const components = {}
 
 export default class ProductPage extends BasePage {
   _id = null
@@ -19,7 +18,6 @@ export default class ProductPage extends BasePage {
     document.title = `Страница продукта - ${this._title}`
 
     this._id = id
-    this._setComponents(components)
     this._init()
   }
 
@@ -100,11 +98,13 @@ export default class ProductPage extends BasePage {
                   <dd class="product-page__detail-desc" data-el="square">Загрузка...</dd>
                 </div>
 
-                <button class="product-page__buy" type="button">Забронировать</button>
+                <button class="product-page__buy" type="button" data-el="buy">Забронировать</button>
               </div>
             </div>
           </div>
         </div>
+
+        <div data-el="modal"></div>
       </div>
     `
   }
@@ -127,5 +127,11 @@ export default class ProductPage extends BasePage {
     return `${product.title}, ${product.square} м<sup>2</sup>`
   }
 
-  _initListeners() {}
+  _initListeners() {
+    this._elements.buy.addEventListener('click', () => {
+      this._reloadComponents({
+        modal: ModalComponent,
+      })
+    })
+  }
 }
