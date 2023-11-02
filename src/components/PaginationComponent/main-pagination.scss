@@ -1,0 +1,30 @@
+@import "@/assets/scss/variable";
+@import "@/assets/scss/mixin";
+
+.main-pagination {
+  @include list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 60px 0;
+}
+
+.main-pagination__item {
+
+}
+
+.main-pagination__link {
+  display: block;
+  padding: 10px 15px;
+
+  color: $color-white;
+  text-decoration: none;
+
+  background-color: lighten($color-black, 60%);
+  border-radius: 5px;
+
+  &--active {
+    background-color: $color-red;
+  }
+}
