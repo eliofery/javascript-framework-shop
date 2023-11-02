@@ -18,6 +18,11 @@ const router = Router.createRoute({
       name: 'bids',
       component: import('@/pages/BidsPage'),
     },
+    {
+      path: '/favourites',
+      name: 'favourites',
+      component: import('@/pages/FavouritesPage'),
+    },
   ],
 })
 
