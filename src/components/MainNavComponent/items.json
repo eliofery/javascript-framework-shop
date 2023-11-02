@@ -5,7 +5,7 @@
   },
   {
     "title": "<svg width=\"16\" height=\"16\"><use xlink:href=\"#icon-blank\"></use></svg> Заявки",
-    "url": "/bids"
+    "url": "/bids?page=1"
   }
 ]
 

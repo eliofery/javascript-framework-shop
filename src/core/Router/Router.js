@@ -131,6 +131,9 @@ export default class Router extends Dispatcher {
       Component = module.default
     }
 
-    return new Component(params)
+    return new Component({
+      ...params,
+      router: this,
+    })
   }
 }

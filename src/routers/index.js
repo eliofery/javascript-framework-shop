@@ -13,6 +13,11 @@ const router = Router.createRoute({
       name: 'product',
       component: import('@/pages/ProductPage'),
     },
+    {
+      path: '/bids',
+      name: 'bids',
+      component: import('@/pages/BidsPage'),
+    },
   ],
 })
 

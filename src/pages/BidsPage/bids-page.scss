@@ -1,0 +1,52 @@
+@import "@/assets/scss/variable";
+@import "@/assets/scss/mixin";
+
+.bids-page {
+  padding: 30px 0;
+}
+
+.bids-page__title {
+  margin: 0 0 20px;
+}
+
+.bids-page__desc {
+  margin: 30px 0;
+}
+
+.bids-page__list {
+  @include list-reset;
+}
+
+.bids-page__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 15px 30px;
+
+  background-color: $color-white;
+  border-radius: 5px;
+
+  transition: all 0.3s ease;
+
+  &:not(&--header):hover,
+  &:not(&--header):focus {
+    box-shadow: 4px 7px 35px #e1e1e1;
+
+    transform: translateY(-3px);
+  }
+}
+
+.bids-page__item--header {
+  padding: 0 30px;
+
+  color: #888888;
+  font-size: 14px;
+
+  background-color: transparent;
+}
+
+.bids-page__name,
+.bids-page__phone {
+  width: 50%;
+  margin: 0;
+}
