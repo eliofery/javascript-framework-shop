@@ -1,6 +1,6 @@
 import Response from '@/core/Response'
 
-const apiClient = Response.create({
+const apiClientPost = Response.create({
   baseUrl: process.env.API_URL,
   credentials: 'omit',
   headers: {
@@ -8,8 +8,20 @@ const apiClient = Response.create({
   },
 })
 
+const apiClientGet = Response.create({
+  baseUrl: process.env.API_URL,
+  credentials: 'omit',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+})
+
 export default {
   addBid(data) {
-    return apiClient.post('/bidnew', data)
+    return apiClientPost.post('/bidnew', data)
+  },
+
+  loadBids() {
+    return apiClientGet.get('/bids')
   },
 }
