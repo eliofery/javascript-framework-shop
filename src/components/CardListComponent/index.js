@@ -1,12 +1,15 @@
 import BaseComponent from '@/core/BaseComponent'
 import CardComponent from '@/components/CardComponent'
-import store from '@/store'
 
 import '@/components/CardListComponent/card-list.scss'
 
 export default class CardListComponent extends BaseComponent {
-  constructor() {
+  _products = []
+
+  constructor(products = []) {
     super()
+
+    this._products = products
 
     this._init()
   }
@@ -27,9 +30,7 @@ export default class CardListComponent extends BaseComponent {
   _initComponent() {
     const wrapper = document.createElement('div')
 
-    const products = store.getState('products')
-
-    const listComponent = this._list(products)
+    const listComponent = this._list(this._products)
 
     wrapper.append(listComponent)
 
@@ -39,6 +40,15 @@ export default class CardListComponent extends BaseComponent {
   _list(data = []) {
     const list = document.createElement('ul')
     list.classList.add('card-list')
+
+    if (data.length < 1) {
+      const li = document.createElement('li')
+      li.classList.add('card-list__item')
+      li.innerHTML = 'Товаров нет.'
+      list.append(li)
+
+      return list
+    }
 
     const items = data.map(item => {
       const li = document.createElement('li')

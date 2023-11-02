@@ -1,11 +1,6 @@
 import BaseComponent from '@/core/BaseComponent'
 import store from '@/store'
-import {
-  SUBMIT_FILTER,
-  RESET_FILTER,
-  SORT_FILTER,
-  sortFilter,
-} from '@/reducers/filterReducer'
+import { SUBMIT_FILTER, RESET_FILTER, SORT_FILTER, sortFilter } from '@/reducers/filterReducer'
 import CardListComponent from '@/components/CardListComponent'
 import CardTableComponent from '@/components/CardTableComponent'
 import { compare } from '@/utils/form'
@@ -14,10 +9,12 @@ import '@/components/ListingComponent/main-listing.scss'
 import { SORT_PRODUCT } from '@/reducers/sortReducer'
 
 const components = {
-  productList: CardListComponent.bind(null),
+  productList: CardListComponent.bind(null, store.getState('products')),
 }
 
 export default class ListingComponent extends BaseComponent {
+  _type = CardListComponent
+
   constructor() {
     super()
 
@@ -32,18 +29,26 @@ export default class ListingComponent extends BaseComponent {
 
   async _loadData() {
     store.subscribe(SUBMIT_FILTER, () => {
+      components.productList = this._type.bind(null, store.getState('products'))
+
       this._reloadComponents(components)
     })
 
     store.subscribe(RESET_FILTER, () => {
+      components.productList = this._type.bind(null, store.getState('products'))
+
       this._reloadComponents(components)
     })
 
     store.subscribe(SORT_FILTER, () => {
+      components.productList = this._type.bind(null, store.getState('products'))
+
       this._reloadComponents(components)
     })
 
     store.subscribe(SORT_PRODUCT, () => {
+      components.productList = this._type.bind(null, store.getState('products'))
+
       this._reloadComponents(components)
     })
   }
@@ -97,10 +102,11 @@ export default class ListingComponent extends BaseComponent {
   _initListeners() {
     this._elements.toggleList.addEventListener('click', () => {
       if (!this._elements.toggleList.dataset.checked) {
-        components.productList = CardListComponent
+        components.productList = CardListComponent.bind(null, store.getState('products'))
         this._reloadComponents(components)
       }
 
+      this._type = CardListComponent
       this._elements.toggleList.dataset.checked = 'true'
       this._elements.toggleTable.removeAttribute('data-checked')
       this._elements.sort.removeAttribute('style')
@@ -112,6 +118,7 @@ export default class ListingComponent extends BaseComponent {
         this._reloadComponents(components)
       }
 
+      this._type = CardTableComponent
       this._elements.toggleList.removeAttribute('data-checked')
       this._elements.toggleTable.dataset.checked = 'true'
       this._elements.sort.style.opacity = '0'
@@ -123,16 +130,10 @@ export default class ListingComponent extends BaseComponent {
 
       if (/price/.test(sortType)) {
         products.sort((a, b) =>
-          sortType === 'priceASC'
-            ? compare(a.price_total, b.price_total)
-            : compare(b.price_total, a.price_total),
+          sortType === 'priceASC' ? compare(a.price_total, b.price_total) : compare(b.price_total, a.price_total),
         )
       } else if (/square/.test(sortType)) {
-        products.sort((a, b) =>
-          sortType === 'squareASC'
-            ? compare(a.square, b.square)
-            : compare(b.square, a.square),
-        )
+        products.sort((a, b) => (sortType === 'squareASC' ? compare(a.square, b.square) : compare(b.square, a.square)))
       }
 
       store.dispatch(sortFilter(products))

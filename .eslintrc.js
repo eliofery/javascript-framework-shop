@@ -32,7 +32,7 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-nested-ternary': 'warn',
     'no-obj-calls': 'warn',
-    'no-undefined': 'warn',
+    'no-undefined': 'off',
     'object-curly-newline': 'off',
     'no-return-assign': 'off',
     'import/prefer-default-export': 'off',

@@ -17,6 +17,14 @@ export default {
     return apiClient.get(`/items/${id}`)
   },
 
+  loadProductById(ids) {
+    if (ids.length < 1) {
+      return []
+    }
+
+    return apiClient.get(`/items?ids=${ids.join(',')}`)
+  },
+
   loadFilterProducts(query) {
     return apiClient.get(query)
   },

@@ -4,6 +4,8 @@ import { priceFormat } from '@/utils/num'
 import ModalComponent from '@/components/ModalComponent'
 
 import '@/pages/ProductPage/product-page.scss'
+import store from '@/store'
+import { addFavourite, TOGGLE_FAVOURITE } from '@/reducers/favouritesReducer'
 
 const { loadProduct } = ProductService
 
@@ -35,6 +37,12 @@ export default class ProductPage extends BasePage {
 
     document.title = `${product.title} - ${this._title}`
 
+    store.subscribe(TOGGLE_FAVOURITE, () => {
+      this._toggleButtonFavourite()
+    })
+
+    this._toggleButtonFavourite()
+
     this.update({
       title: this._heading(product),
       image: this._image(product),
@@ -49,6 +57,16 @@ export default class ProductPage extends BasePage {
       priceSq: `${priceFormat(product.price_sq_m)} ₸/м<sup>2</sup>`,
       square: `${product.square} м<sup>2</sup>`,
     })
+  }
+
+  _toggleButtonFavourite() {
+    const favorites = store.getState('favourites')
+
+    if (favorites.includes(this._id)) {
+      this._elements.favourite.classList.add('product-page__favorite--active')
+    } else {
+      this._elements.favourite.classList.remove('product-page__favorite--active')
+    }
   }
 
   get _template() {
@@ -67,13 +85,9 @@ export default class ProductPage extends BasePage {
                 <b class="product-page__sector" data-el="sector">Загрузка...</b>
                 <h2 class="product-page__subtitle" data-el="subtitle">Загрузка...</h2>
                 <p class="product-page__art" data-el="art">Загрузка...</p>
-                <button class="product-page__favorite" type="button">
+                <button class="product-page__favorite" type="button" data-el="favourite">
                   <svg width="24" height="24"><use xlink:href="#icon-heart"></use></svg>
                   В избранное
-                </button>
-                <button class="product-page__favorite product-page__favorite--active" type="button">
-                  <svg width="24" height="24"><use xlink:href="#icon-heart"></use></svg>
-                  В избранном
                 </button>
               </div>
 
@@ -110,9 +124,7 @@ export default class ProductPage extends BasePage {
   }
 
   _heading(product) {
-    return `${product.title}, ${product.square} м<sup>2</sup> за ${priceFormat(
-      product.price_total,
-    )} ₸`
+    return `${product.title}, ${product.square} м<sup>2</sup> за ${priceFormat(product.price_total)} ₸`
   }
 
   _image(product) {
@@ -132,6 +144,10 @@ export default class ProductPage extends BasePage {
       this._reloadComponents({
         modal: ModalComponent,
       })
+    })
+
+    this._elements.favourite.addEventListener('click', async () => {
+      store.dispatch(addFavourite(this._id))
     })
   }
 }

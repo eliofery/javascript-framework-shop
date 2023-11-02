@@ -47,9 +47,10 @@
 
   transition: color 0.3s ease;
 
+  &--active,
   &:hover,
   &:focus {
-    color: darken($color-white, 20%);
+    color: $color-yellow;
   }
 }
 
@@ -57,9 +58,10 @@
   color: $color-white;
 }
 
+.main-nav__link--active svg,
 .main-nav__link:hover svg,
 .main-nav__link:focus svg {
-  color: darken($color-white, 10%);
+  color: $color-yellow;
 }
 
 @media screen and (max-width: 470px) {
