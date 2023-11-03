@@ -1,7 +1,7 @@
 {
-  "name": "JavaScript framework",
-  "short_name": "JavaScript framework",
-  "description": "JavaScript framework для создания spa приложений",
+  "name": "Интернет магазин недвижимости",
+  "short_name": "Интернет магазин недвижимости",
+  "description": "Интернет магазин недвижимости поможем найти подходящую квартиру по доступной цене",
   "lang": "ru",
   "dir": "ltr",
   "id": "/",

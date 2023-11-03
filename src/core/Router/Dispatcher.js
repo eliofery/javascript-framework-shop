@@ -1,5 +1,10 @@
-import HISTORY_TYPE_ENUM from '@/core/Router/HistoryTypeEnum'
+import HISTORY_TYPE_ENUM from '@/core/Router/HistoryTypeEnum' // виды роутинга
 
+/**
+ * Родительский класс для Router
+ *
+ * Содержит вспомогательные методы для Router.
+ */
 export default class Dispatcher {
   /**
    * Разрешение на создание экземпляра класса
@@ -33,18 +38,37 @@ export default class Dispatcher {
    */
   _routes = []
 
+  /**
+   * Основной корневой элемент в который будет добавляться разметка
+   *
+   * @type {string}
+   * @private
+   */
   _root = '#app'
 
+  /**
+   * Данный класс является абстрактным
+   */
   constructor() {
     if (!Dispatcher._initializing) {
       throw new TypeError('Нельзя напрямую создать экземпляр данного класса')
     }
   }
 
+  /**
+   * Получение основного корневого элемента
+   *
+   * @returns {string}
+   */
   get root() {
     return this._root
   }
 
+  /**
+   * Изменение основного корневого элемента
+   *
+   * @param selector
+   */
   set root(selector) {
     this._root = selector
   }
@@ -55,10 +79,12 @@ export default class Dispatcher {
    * @returns {*|null}
    */
   static get instance() {
+    // Возвращаем объект данного класса если он был уже создан
     if (this._instance instanceof this) {
       return this._instance
     }
 
+    // Если объект не был создан создаем его и возвращаем
     Dispatcher._initializing = true
     this._instance = new this()
     Dispatcher._initializing = false
@@ -84,10 +110,20 @@ export default class Dispatcher {
     return this._routes
   }
 
+  /**
+   * Режим роута с хэшем
+   *
+   * @returns {string}
+   */
   static createWebHashHistory() {
     return HISTORY_TYPE_ENUM.HASH
   }
 
+  /**
+   * Режим роута стандартный
+   *
+   * @returns {string}
+   */
   static createWebHistory() {
     return HISTORY_TYPE_ENUM.STATE
   }
@@ -95,18 +131,18 @@ export default class Dispatcher {
   /**
    * Форматирование текущего адреса страницы для режима хэш
    *
-   * @returns {*}
-   * @property
+   * @returns {string}
+   * @private
    */
   _strippedHashPath() {
     return `/${window.location.hash.replace(/^#\//, '')}` // '#/foo/bar' -> '/foo/bar'
   }
 
   /**
-   * Форматирование текущего адреса страницы
+   * Форматирование текущего адреса страницы в стандартном режиме
    *
-   * @returns {*}
-   * @property
+   * @returns {string}
+   * @private
    */
   _strippedPath() {
     return `/${window.location.pathname
