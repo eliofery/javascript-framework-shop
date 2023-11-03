@@ -1,10 +1,12 @@
 {
   "name": "javascript-framework-shop",
-  "version": "0.0.57",
+  "version": "0.0.58",
   "description": "Интернет магазин недвижимости.",
   "keywords": [
     "webpack",
-    "spa"
+    "spa",
+    "linter",
+    "redux"
   ],
   "main": "index.js",
   "scripts": {

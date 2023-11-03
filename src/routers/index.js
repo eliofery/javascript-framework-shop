@@ -1,5 +1,10 @@
 import Router from '@/core/Router/Router'
 
+/**
+ * Регистрация роутов
+ *
+ * @type {*|null}
+ */
 const router = Router.createRoute({
   history: Router.createWebHistory(),
   routes: [
@@ -22,6 +27,11 @@ const router = Router.createRoute({
       path: '/favourites',
       name: 'favourites',
       component: import('@/pages/FavouritesPage'),
+    },
+    {
+      path: '/.*',
+      name: '404',
+      component: import('@/pages/ErrorPage'),
     },
   ],
 })
