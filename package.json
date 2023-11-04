@@ -1,6 +1,6 @@
 {
   "name": "javascript-framework-shop",
-  "version": "0.0.59",
+  "version": "0.1.0",
   "description": "Интернет магазин недвижимости.",
   "keywords": [
     "webpack",
@@ -18,7 +18,15 @@
     "last 2 version",
     "not dead"
   ],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliofery/javascript-framework-shop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eliofery/javascript-framework-shop/issues"
+  },
+  "homepage": "https://github.com/eliofery/javascript-framework-shop#readme",
+  "author": "Sergio Eliofery",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.23.0",

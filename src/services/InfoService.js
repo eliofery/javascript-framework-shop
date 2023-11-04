@@ -1,7 +1,7 @@
-import Response from '@/core/Response'
+import Response from '@/core/Response' // подобие axios
 
 const apiClient = Response.create({
-  baseUrl: process.env.API_URL,
+  baseUrl: process.env.API_URL, // смотреть файл development.env или production.env
   credentials: 'omit',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -9,6 +9,11 @@ const apiClient = Response.create({
 })
 
 export default {
+  /**
+   * Получение общей информации
+   *
+   * @returns {*}
+   */
   loadInfo() {
     return apiClient.get('/itemsinfo')
   },
