@@ -10,7 +10,7 @@ export default class Dispatcher {
    * Разрешение на создание экземпляра класса
    *
    * @type {boolean}
-   * @private
+   * @protected
    */
   static _initializing = false
 
@@ -18,7 +18,7 @@ export default class Dispatcher {
    * Экземпляр класса
    *
    * @type {null}
-   * @private
+   * @protected
    */
   static _instance = null
 
@@ -42,7 +42,7 @@ export default class Dispatcher {
    * Основной корневой элемент в который будет добавляться разметка
    *
    * @type {string}
-   * @private
+   * @protected
    */
   _root = '#app'
 
@@ -132,7 +132,7 @@ export default class Dispatcher {
    * Форматирование текущего адреса страницы для режима хэш
    *
    * @returns {string}
-   * @private
+   * @protected
    */
   _strippedHashPath() {
     return `/${window.location.hash.replace(/^#\//, '')}` // '#/foo/bar' -> '/foo/bar'
@@ -142,7 +142,7 @@ export default class Dispatcher {
    * Форматирование текущего адреса страницы в стандартном режиме
    *
    * @returns {string}
-   * @private
+   * @protected
    */
   _strippedPath() {
     return `/${window.location.pathname

@@ -69,7 +69,9 @@ export default class CardComponent extends BaseComponent {
             </span>
           </header>
           <p class="product-card__pic">
-            <img class="product-card__img" width="300" height="300" src="${this._image}" alt="ЖК ${this._complexName}">
+            <img class="product-card__img" width="300" height="300" src="${this._image}" alt="ЖК ${
+              this._complexName
+            }" loading="lazy">
           </p>
           <div class="product-card__desc">
             <p class="product-card__price">

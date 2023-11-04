@@ -1,18 +1,48 @@
+/**
+ * Инициализация приложения
+ *
+ */
 export default class App {
+  /**
+   * Объект класса Router
+   *
+   * @type {{}}
+   */
   #router = {}
 
+  /**
+   * Создание приложения
+   *
+   * @param router
+   */
   constructor(router) {
+    // Получаем объект класса Router
     this.#router = router
   }
 
+  /**
+   * Инициализация приложения
+   *
+   * @param selector
+   */
   run(selector = '#app') {
+    // Определяем основной селектор приложения
+    // в котором будет производиться отрисовка сайта
     this.#router.root = selector
 
-    this._render()
-    window.addEventListener(this.#router.history, () => this._render())
+    // Рендерим страницу сайта
+    this.#render()
+
+    // При изменении ссылки заново рендерим страницу
+    window.addEventListener(this.#router.history, () => this.#render())
   }
 
-  _render() {
+  /**
+   * Рендер страницы сайта
+   *
+   * @private
+   */
+  #render() {
     this.#router.render()
   }
 }

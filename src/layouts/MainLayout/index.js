@@ -1,22 +1,39 @@
-import BaseComponent from '@/core/BaseComponent'
-import MainNavComponent from '@/components/MainNavComponent'
+import BaseComponent from '@/core/BaseComponent' // базовый компонент
+import MainNavComponent from '@/components/MainNavComponent' // компонент навигации
 
+// Стили шаблона
 import '@/layouts/MainLayout/main-layout.scss'
 import '@/layouts/MainLayout/main-header.scss'
 import '@/layouts/MainLayout/main-footer.scss'
 
+// Вложенные компоненты
 const components = {
   nav: new MainNavComponent(),
 }
 
-export default class Index extends BaseComponent {
+/**
+ * Основной шаблон
+ */
+export default class MainLayout extends BaseComponent {
+  /**
+   * Создание шаблона
+   */
   constructor() {
     super()
 
+    // Регистрируем вложенные компоненты
     this._setComponents(components)
+
+    // Инициализируем шаблон
     this._init()
   }
 
+  /**
+   * Разметка шаблона
+   *
+   * @returns {string}
+   * @protected
+   */
   get _template() {
     return `
       <div class="main-layout">

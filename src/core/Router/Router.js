@@ -10,7 +10,7 @@ export default class Router extends Dispatcher {
    * Хранит область где будет располагаться разметка страницы
    *
    * @type {null}
-   * @private
+   * @protected
    */
   _pageElement = null
 
@@ -22,11 +22,16 @@ export default class Router extends Dispatcher {
    * @returns {*|null}
    */
   static createRoute({ history, routes }) {
+    // Получаем объект класса Router
     const router = Router.instance
 
+    // Определяем режим навигации по сайту
     router._history = history ?? router._history
+
+    // Получаем зарегистрированные маршруты
     router._routes.push(...routes)
 
+    // Возвращаем объект класса Router
     return router
   }
 
@@ -75,7 +80,7 @@ export default class Router extends Dispatcher {
    *
    * @param layout - import('@/layouts/MainLayout')
    * @returns {Promise<void>}
-   * @private
+   * @protected
    */
   _renderLayout = async layout => {
     // Страница будет содержать путь до шаблона вида import('@/layouts/MainLayout'),
@@ -101,7 +106,7 @@ export default class Router extends Dispatcher {
    *
    * @param component
    * @returns {Promise<void>}
-   * @private
+   * @protected
    */
   _renderPage = async ({ component }) => {
     // Получаем корневой элемент в который рендерится весь сайт
@@ -126,7 +131,7 @@ export default class Router extends Dispatcher {
   /**
    * Базовая страница 404
    *
-   * @private
+   * @protected
    */
   _page404() {
     document.querySelector(this._root).innerHTML = 'Страница 404 не найдена'
@@ -152,7 +157,7 @@ export default class Router extends Dispatcher {
    * Пример: /foo/1/bar/2 => { foo: 1, bar: 2 }
    *
    * @returns {{}}
-   * @private
+   * @protected
    */
   _getParams() {
     return this.getUri()
@@ -172,7 +177,7 @@ export default class Router extends Dispatcher {
    *
    * @param route
    * @returns {*}
-   * @private
+   * @protected
    */
   _findRoute(route) {
     return this._routes.find(item => {
@@ -188,7 +193,7 @@ export default class Router extends Dispatcher {
    * @param component - import('@/foo/bar')
    * @param params - { foo: 1, bar: 2 }
    * @returns {Promise<*>}
-   * @private
+   * @protected
    */
   async _getComponent(component, params = {}) {
     let Component = component
