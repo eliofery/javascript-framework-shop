@@ -9,27 +9,27 @@ const router = Router.createRoute({
   history: Router.createWebHistory(),
   routes: [
     {
-      path: '/',
+      path: '/javascript-framework-shop/',
       name: 'home',
       component: import('@/pages/HomePage'),
     },
     {
-      path: '/item/[0-9]+',
+      path: '/javascript-framework-shop/item/[0-9]+',
       name: 'product',
       component: import('@/pages/ProductPage'),
     },
     {
-      path: '/bids',
+      path: '/javascript-framework-shop/bids',
       name: 'bids',
       component: import('@/pages/BidsPage'),
     },
     {
-      path: '/favourites',
+      path: '/javascript-framework-shop/favourites',
       name: 'favourites',
       component: import('@/pages/FavouritesPage'),
     },
     {
-      path: '/.*',
+      path: '/javascript-framework-shop/.*',
       name: '404',
       component: import('@/pages/ErrorPage'),
     },
