@@ -61,20 +61,11 @@ export default class CardTableComponent extends BaseComponent {
 
   _list(data = {}) {
     return data.map(item => {
-      const {
-        id,
-        scu,
-        complexName,
-        square,
-        priceSqM,
-        priceTotal,
-        building,
-        floor,
-        rooms,
-      } = convertKeysToCamelCase(item)
+      const { id, scu, complexName, square, priceSqM, priceTotal, building, floor, rooms } =
+        convertKeysToCamelCase(item)
 
       const link = new Link({
-        url: `/item/${id}`,
+        url: `${process.env.PREFIX_URL}/item/${id}`,
         html: `
           <div class="card-table__col card-table__col--scu">${scu}</div>
           <div class="card-table__col card-table__col--complex">ЖК ${complexName}</div>
@@ -82,12 +73,8 @@ export default class CardTableComponent extends BaseComponent {
           <div class="card-table__col card-table__col--floor">${floor}</div>
           <div class="card-table__col card-table__col--rooms">${rooms}</div>
           <div class="card-table__col card-table__col--square">${square} м<sup>2</sup></div>
-          <div class="card-table__col card-table__col--priceSqM">${priceFormat(
-            priceSqM,
-          )} ₸</div>
-          <div class="card-table__col card-table__col--priceTotal">${priceFormat(
-            priceTotal,
-          )} ₸</div>
+          <div class="card-table__col card-table__col--priceSqM">${priceFormat(priceSqM)} ₸</div>
+          <div class="card-table__col card-table__col--priceTotal">${priceFormat(priceTotal)} ₸</div>
           <div class="card-table__col card-table__col--favorite">
             <span class="card-table__favorite" data-el="favorite" tabindex="0">
               <svg width="24" height="24"><use xlink:href="#icon-heart"></use></svg>
@@ -118,8 +105,7 @@ export default class CardTableComponent extends BaseComponent {
     const products = store.getState('products')
     const sortDirections = store.getState('directions')
 
-    const sortDirection = col =>
-      (sortDirections[col] = sortDirections[col] === 'asc' ? 'desc' : 'asc')
+    const sortDirection = col => (sortDirections[col] = sortDirections[col] === 'asc' ? 'desc' : 'asc')
 
     complex.addEventListener('click', () => {
       sortDirection('complex')
@@ -136,11 +122,7 @@ export default class CardTableComponent extends BaseComponent {
     rooms.addEventListener('click', () => {
       sortDirection('rooms')
 
-      products.sort((a, b) =>
-        sortDirections.rooms === 'asc'
-          ? compare(a.rooms, b.rooms)
-          : compare(b.rooms, a.rooms),
-      )
+      products.sort((a, b) => (sortDirections.rooms === 'asc' ? compare(a.rooms, b.rooms) : compare(b.rooms, a.rooms)))
 
       store.dispatch(sortProduct(products))
     })
@@ -149,9 +131,7 @@ export default class CardTableComponent extends BaseComponent {
       sortDirection('square')
 
       products.sort((a, b) =>
-        sortDirections.square === 'asc'
-          ? compare(a.square, b.square)
-          : compare(b.square, a.square),
+        sortDirections.square === 'asc' ? compare(a.square, b.square) : compare(b.square, a.square),
       )
 
       store.dispatch(sortProduct(products))
@@ -161,9 +141,7 @@ export default class CardTableComponent extends BaseComponent {
       sortDirection('priceSqM')
 
       products.sort((a, b) =>
-        sortDirections.priceSqM === 'asc'
-          ? compare(a.price_sq_m, b.price_sq_m)
-          : compare(b.price_sq_m, a.price_sq_m),
+        sortDirections.priceSqM === 'asc' ? compare(a.price_sq_m, b.price_sq_m) : compare(b.price_sq_m, a.price_sq_m),
       )
 
       store.dispatch(sortProduct(products))
