@@ -44,7 +44,12 @@ export default class MainLayout extends BaseComponent {
         <main data-el="page"><!-- PageComponent --></main>
 
         <footer class="main-footer">
-          <div class="container">Copyright 2023</div>
+          <div class="container">
+            <span>Copyright 2023</span>
+            <a class="main-footer__author" href="https://github.com/eliofery/javascript-framework-webpack" target="_blank" rel="nofollow">
+            <span>Sergio</span> Eliofery
+            </a>
+          </div>
         </footer>
       </div>
     `
