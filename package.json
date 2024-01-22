@@ -11,6 +11,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
+    "precommit": "lint-staged",
     "develop": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js"
   },
