@@ -160,7 +160,9 @@ export default class Router extends Dispatcher {
    * @protected
    */
   _getParams() {
-    return this.getUri()
+    const path = this.getUri().replace(process.env.PREFIX_URL, '')
+
+    return path
       .slice(1)
       .split('/')
       .reduce((acc, item, index, array) => {

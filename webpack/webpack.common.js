@@ -100,6 +100,7 @@ module.exports = merge(webpackBase, {
     // определение переменных окружения
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
+      'process.env.PREFIX_URL': JSON.stringify(process.env.PREFIX_URL),
     }),
 
     // создание HTML файла на основе шаблона

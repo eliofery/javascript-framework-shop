@@ -59,7 +59,7 @@ export default class CardComponent extends BaseComponent {
     const classActive = favorites.includes(this._id) ? 'product-card__favorite--active' : ''
 
     return new Link({
-      url: `/item/${this._id}`,
+      url: `${process.env.PREFIX_URL}/item/${this._id}`,
       attributes: { class: 'product-card__link', 'data-id': this._id },
       html: `
           <header class="product-card__header">

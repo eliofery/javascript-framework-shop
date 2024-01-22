@@ -11,7 +11,7 @@ module.exports = merge(common, {
   mode: 'production', // режим production
   output: {
     // исходная точка
-    publicPath: '', // публичный путь для доступа к выходным файлам
+    publicPath: '/javascript-framework-shop/', // публичный путь для доступа к выходным файлам
     path: resolve(__dirname, '../build'), // устанавливает путь для сохранения собранного кода
     filename: 'js/[name].[contenthash].js', // настройка имени собранного файла с хэшем содержимого
     clean: true, // очистка каталога сборки перед каждой новой сборкой

@@ -6,7 +6,7 @@ import '@/components/MainNavComponent/main-nav.scss'
 
 const components = {
   homeLink: new Link({
-    url: '/',
+    url: `${process.env.PREFIX_URL}`,
     html: 'Интернет магазин',
     attributes: { class: 'main-nav__logo' },
   }),
